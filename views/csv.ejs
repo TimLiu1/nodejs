@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript" src="/javascripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/javascripts/highcharts.js"></script>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+涨幅最大的股票公司是: <%= company %><br><br>
+涨幅为: <%= max %>
+</body>
+
+<p id="re" hidden="hidden"><%= result%></p>
+<!--<p id="na" hidden="hidden" >></p>-->
+<p id="container"></p>
+<h3 id="h3">图形正在加载中，大概7秒左右.....</h3>
+</html>
+<script>
+$(function () {
+
+//    var result = $("#re").text();
+//    var nameAll = $("#na").text();
+    $.ajax({
+        type:"get",
+        url:"/report",
+        dataType:"json",
+        success: function(result) {
+            alert("加载完毕")
+            $("#h3").text("")
+
+
+            $('#container').highcharts({
+                chart: {type: 'column'},
+                title: {text: '不同公司股价涨幅柱状图'},
+                xAxis: {categories: result.nameAll},
+                yAxis: {title: {text: '百分比 (%)'}},
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' + '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+                    footerFormat: '</table>', shared: true, useHTML: true
+                },
+                plotOptions: {column: {pointPadding: 0.2, borderWidth: 0}},
+                series: result.series
+            });
+        }
+        })
+
+})
+
+</script>

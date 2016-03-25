@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript" src="/javascripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/javascripts/highcharts.js"></script>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+
+
+<!--<p id="na" hidden="hidden" >></p>-->
+<p id="container"></p>
+<h3 id="h3">图形正在加载中，大概7秒左右.....</h3>
+</html>
+<script>
+$(function () {
+
+//    var result = $("#re").text();
+//    var nameAll = $("#na").text();
+    $.ajax({
+        type:"get",
+        url:"/chart_show",
+        dataType:"json",
+        success: function(result) {
+            alert("加载完毕")
+            $("#h3").text("")
+
+
+            $('#container').highcharts({
+                title: {
+                    text: "各公司股票走势图",
+                    style: {
+                        color: '#2FA3E6'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: '股价'
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                xAxis: {
+
+                    categories: result.time
+                },
+                series: result.series,
+                credits: {
+                    enabled: false
+                }
+
+            });
+        }
+        })
+
+})
+
+</script>
