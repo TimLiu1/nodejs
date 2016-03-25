@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('resume:server');
 var http = require('http');
+var csv = require("node-csv");
 
 /**
  * Get port from environment and store in Express.
@@ -24,9 +25,14 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+console.log("启动中....")
+csv.createParser().parseFile('./values.csv', function (err, data) {
+  globalData = data
+  server.listen(port);
+  console.log("listening localhost:3000")
 
-server.listen(port);
-console.log("listening localhost:3000")
+})
+
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -60,8 +66,8 @@ function onError(error) {
   }
 
   var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+      ? 'Pipe ' + port
+      : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -85,7 +91,7 @@ function onError(error) {
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+      ? 'pipe ' + addr
+      : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
