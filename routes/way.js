@@ -3,11 +3,14 @@
  * 数据格式化
  * */
 
-function  ProData()
-{
+
+function ProData(news) {
     /**
      *  传入文件数据
      */
+
+
+        console.log("ssss"+news)
     var data = globalData
 
     /**
@@ -39,9 +42,7 @@ function  ProData()
             }
         })
         typesone.push(types);
-
     })
-    //console.log(typesone)
 
     /**
      *按年份排序
@@ -51,25 +52,10 @@ function  ProData()
     var x = 0;
     var time = [];
     var series = [];
+    var data_csv = [];
+    var values = []
     typesone.forEach(function (e) {
 
-        for(var i=0;i< e.length;i++) {
-            var arr = e[i][1].split("-");
-            if (arr[1] < 10 && arr[2] < 10) {
-                arr[1] = "0" + arr[1];
-                arr[2] = "0" + arr[2];
-                e[i][1] = arr[0] + "-" + arr[1] + "-" + arr[2]
-            }
-            if (arr[1] < 10 && (arr[2] > 10 ||arr[2]==10)) {
-                arr[1] = "0" + arr[1];
-                e[i][1] = arr[0] + "-" + arr[1] + "-" + arr[2]
-            }
-            if ((arr[1] > 10 ||arr[1] == 10) && arr[2] < 10) {
-
-                arr[2] = "0" + arr[2];
-                e[i][1] = arr[0] + "-" + arr[1] + "-" + arr[2]
-            }
-        }
         for (var i = 0; i < e.length; i++) {
             for (var j = i; j < e.length; j++) {
                 if (e[i][1] > e[j][1]) {
@@ -86,43 +72,60 @@ function  ProData()
         var e_end = [];
         var name = e[0][0];
         var data = [];
-        console.log(e)
         e.forEach(function (e2) {
             if (!isNaN(e2[3])) {
+                var detail = {};
                 e_end.push(e2);
+                detail.Name = e2[0]
+                detail.Date = e2[1]
+                detail.notes = e2[2]
+                detail.Values = e2[3]
+                detail.Change = e2[4]
+                data_csv.push(detail);
                 data.push(parseFloat(e2[3]))
-                if(x == 0) {
+                if (x == 0) {
                     time.push(e2[1]);
                     //console.log(e2[1])
                 }
             }
 
         })
-        x=1;
+
+        x = 1;
         var details = {};
         details.name = name;
         details.data = data;
         series.push(details)
 
-
         /**
          *求出不同公司涨幅及增值
          */
+               var value = 0;
 
+            for(var i =0 ;i<e_end.length;i++){
+                if(e_end[i][4] == "INCREASED"){
+                    value  = value + parseFloat(e_end[i][3])
+                }
+                if(e_end[i][4] == "DECREASED"){
+                    value  = value - parseFloat(e_end[i][3])
+                }
+
+            }
+
+        value = value.toFixed(1)
+        console.log(value);
         var percent = (((e_end[e_end.length - 1][3] - e_end[0][3]) / e_end[0][3]) * 100).toFixed(1);
         nameAll.push(name);
-        result.push(percent);
+        result.push(value);
+    })
 
-
-})
     var end_data = [];
     end_data.push(result)
     end_data.push(nameAll)
     end_data.push(time)
     end_data.push(series)
+    end_data.push(data_csv)
     return end_data
-
-
 
 }
 

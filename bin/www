@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+        var moment = require('moment');
 /**
  * Module dependencies.
  */
@@ -27,7 +27,11 @@ var server = http.createServer(app);
  */
 console.log("启动中....")
 csv.createParser().parseFile('./values.csv', function (err, data) {
+        for (var i = 0; i < data.length; i++) {
+        data[i][1] = moment(data[i][1],"YYYY-MM-DD").format("YYYY-MM-DD")
+        }
   globalData = data
+
   server.listen(port);
   console.log("listening localhost:3000")
 
