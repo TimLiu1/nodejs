@@ -24,15 +24,10 @@
     $(function () {
         qq();
        function qq(){
-       var news = $("#temp").val();
-
            $.ajax({
                type: "get",
                url: "/report",
                dataType: "json",
-               data : {
-                  news:news
-               },
                success: function (result) {
 
                    $("#h3").text("")

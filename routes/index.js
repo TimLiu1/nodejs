@@ -37,7 +37,7 @@ router.get('/csv', function (req, res) {
     }
     var company = nameAll[b];
     console.log("所处最大值的公司是" + nameAll[b]);
-    res.render('csv', {company: company, max: a , result: result, nameAll: nameAll});
+    res.render('csv', {company: company, max: a+"元" , result: result, nameAll: nameAll});
 
 })
 
@@ -48,8 +48,8 @@ router.get('/csv', function (req, res) {
 router.get('/report', function (req, res, next) {
 
 
-    var news = req.query.news;
-    var data_all = way.ProData(news)
+
+    var data_all = way.ProData()
 
 
     var result = data_all[0];
@@ -95,8 +95,10 @@ router.get('/chart_show', function (req, res, next) {
  */
 router.get('/download-csv', function (req, res, next) {
 
-    var data_all = way.ProData()
-    var data_csv = data_all[9];
+    var data_all = way.ProData();
+    console.log("are you ok ,are you coming?")
+    var data_csv = data_all[4];
+    console.log(data_csv);
     var header = ['Name', 'Date', 'notes', 'Values', 'Change'];
     var headerDatas = ['Name', 'Date', 'notes', 'Values', 'Change'];
 

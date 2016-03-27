@@ -4,13 +4,12 @@
  * */
 
 
-function ProData(news) {
+function ProData() {
     /**
      *  传入文件数据
      */
 
 
-        console.log("ssss"+news)
     var data = globalData
 
     /**
@@ -113,7 +112,7 @@ function ProData(news) {
             }
 
         value = value.toFixed(1)
-        console.log(value);
+        //console.log(value);
         var percent = (((e_end[e_end.length - 1][3] - e_end[0][3]) / e_end[0][3]) * 100).toFixed(1);
         nameAll.push(name);
         result.push(value);
