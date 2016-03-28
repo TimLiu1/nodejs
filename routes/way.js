@@ -127,13 +127,11 @@ function ProData() {
 
 }
 
-
+/**
+ * 求最大值的方法
+ */
 function max(){
     var data = globalData
-
-    /**
-     * 求最大值的方法
-     */
     var type = [];
     data.forEach(function (e) {
         var i = 0;
@@ -145,32 +143,26 @@ function max(){
         if (i == 0 && e[0] != "Name") {
             type.push(e[0])
         }
-
     })
-
     var maxCompany = "";
     var max = 0;
    type.forEach(function(e){
-       var details = {}
        var value = 0;
      data.forEach(function(e1){
-         if(e1[4] == "INCREASED" && e1[0] == e ){
-             value  = value + parseFloat(e1[3])
-         }
-         if(e1[4] == "DECREASED" &&  e1[0] == e){
-             value  = value - parseFloat(e1[3])
-         }
+
+             if(e1[4] == "INCREASED" && e == e1[0]) {
+                 value = value + parseFloat(e1[3])
+             }
+             if(e1[4] == "DECREASED" && e == e1[0]){
+                 value  = value - parseFloat(e1[3])
+             }
      })
        value = value.toFixed(1);
        if(value>parseFloat(max)){
            max = value;
            maxCompany = e;
        }
-
-
    })
-
-
     console.log("最大值是"+max+"公司名是"+maxCompany);
     var result = [];
     result.push(max);

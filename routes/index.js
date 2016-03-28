@@ -18,15 +18,12 @@ router.get('/', function (req, res, next) {
     //console.log(way.ProData())
     res.render('index', {title: 'Express'});
 });
-
-
 /**
  * 求最大值的方法
  */
-
 router.get('/max',function(req,res){
 
-    var result = way.max();
+   var result = way.max();
     var max = result[0];
     var maxCompany = result[1];
     res.render('max', {max: max,maxCompany:maxCompany});
