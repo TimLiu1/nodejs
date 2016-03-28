@@ -28,6 +28,7 @@ app.use('/report', routes);
 app.use('/chart', routes);
 app.use('/download-csv', routes);
 app.use('/chart_show', routes);
+app.use('/max', routes);
 app.use('/users', users);
 
 

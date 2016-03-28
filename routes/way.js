@@ -1,19 +1,19 @@
 /**
  * Created by TimLiu 2016-03-25
- * Êı¾İ¸ñÊ½»¯
+ * ï¿½ï¿½ï¿½İ¸ï¿½Ê½ï¿½ï¿½
  * */
 
 
 function ProData() {
     /**
-     *  ´«ÈëÎÄ¼şÊı¾İ
+     *  ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
      */
 
 
     var data = globalData
 
     /**
-     * °Ñ²»Í¬µÄ¹«Ë¾Ãû³Æ×éºÏ³ÉÒ»¸öÊı×é
+     * ï¿½Ñ²ï¿½Í¬ï¿½Ä¹ï¿½Ë¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï³ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     var type = [];
     data.forEach(function (e) {
@@ -29,7 +29,7 @@ function ProData() {
 
     })
     /**
-     *   °Ñ²»Í¬¹«Ë¾µÄÊı¾İ¹éÎª¸÷×ÔµÄÊı×éÖĞÈ¥£¬ÔÙÓÃÒ»¸öÊı×éº­¸Ç£¬ËùÎ½ÈıÎ¬Êı×é
+     *   ï¿½Ñ²ï¿½Í¬ï¿½ï¿½Ë¾ï¿½ï¿½ï¿½ï¿½ï¿½İ¹ï¿½Îªï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½éº­ï¿½Ç£ï¿½ï¿½ï¿½Î½ï¿½ï¿½Î¬ï¿½ï¿½ï¿½ï¿½
      */
 
     var typesone = [];
@@ -44,7 +44,7 @@ function ProData() {
     })
 
     /**
-     *°´Äê·İÅÅĞò
+     *ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     var result = [];
     var nameAll = [];
@@ -66,7 +66,7 @@ function ProData() {
         }
 
         /**
-         * È¥³ıÎŞĞ§Êı¾İ
+         * È¥ï¿½ï¿½ï¿½ï¿½Ğ§ï¿½ï¿½ï¿½ï¿½
          */
         var e_end = [];
         var name = e[0][0];
@@ -97,10 +97,9 @@ function ProData() {
         series.push(details)
 
         /**
-         *Çó³ö²»Í¬¹«Ë¾ÕÇ·ù¼°ÔöÖµ
+         *ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½Ë¾ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
          */
                var value = 0;
-
             for(var i =0 ;i<e_end.length;i++){
                 if(e_end[i][4] == "INCREASED"){
                     value  = value + parseFloat(e_end[i][3])
@@ -128,7 +127,59 @@ function ProData() {
 
 }
 
+
+function max(){
+    var data = globalData
+
+    /**
+     * æ±‚æœ€å¤§å€¼çš„æ–¹æ³•
+     */
+    var type = [];
+    data.forEach(function (e) {
+        var i = 0;
+        type.forEach(function (e1) {
+            if (e1 == e[0]) {
+                i = 1
+            }
+        })
+        if (i == 0 && e[0] != "Name") {
+            type.push(e[0])
+        }
+
+    })
+
+    var maxCompany = "";
+    var max = 0;
+   type.forEach(function(e){
+       var details = {}
+       var value = 0;
+     data.forEach(function(e1){
+         if(e1[4] == "INCREASED" && e1[0] == e ){
+             value  = value + parseFloat(e1[3])
+         }
+         if(e1[4] == "DECREASED" &&  e1[0] == e){
+             value  = value - parseFloat(e1[3])
+         }
+     })
+       value = value.toFixed(1);
+       if(value>parseFloat(max)){
+           max = value;
+           maxCompany = e;
+       }
+
+
+   })
+
+
+    console.log("æœ€å¤§å€¼æ˜¯"+max+"å…¬å¸åæ˜¯"+maxCompany);
+    var result = [];
+    result.push(max);
+    result.push(maxCompany)
+    return result;
+}
+
 exports.ProData = ProData;
+exports.max = max;
 
 
 

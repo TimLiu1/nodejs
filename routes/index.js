@@ -19,6 +19,22 @@ router.get('/', function (req, res, next) {
     res.render('index', {title: 'Express'});
 });
 
+
+/**
+ * 求最大值的方法
+ */
+
+router.get('/max',function(req,res){
+
+    var result = way.max();
+    var max = result[0];
+    var maxCompany = result[1];
+    res.render('max', {max: max,maxCompany:maxCompany});
+})
+
+
+
+
 router.get('/csv', function (req, res) {
     var data_all = way.ProData()
     var result = data_all[0];
