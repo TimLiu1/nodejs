@@ -16,6 +16,10 @@ var utfToGbk = new Iconv('UTF-8', 'GBK');
  */
 router.get('/', function (req, res, next) {
     //console.log(way.ProData())
+
+    var a = {name:"Tim",name: "lisa",age:"20",word:"Tim ,Come on ,you can do it"};
+    console.log(a)
+
     res.render('index', {title: 'Express'});
 });
 /**
@@ -23,10 +27,10 @@ router.get('/', function (req, res, next) {
  */
 router.get('/max',function(req,res){
 
-   var result = way.max();
-    var max = result[0];
-    var maxCompany = result[1];
-    res.render('max', {max: max,maxCompany:maxCompany});
+   var result = way.max1();
+    var max = result[1];
+    var maxCompany = result[0].substring(5);
+    res.render('max', {max: max+"%",maxCompany:maxCompany});
 })
 
 
